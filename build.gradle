@@ -8,6 +8,7 @@ plugins {
 group = 'ru.z3r0ing.telegrambots'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+description = 'Spring Boot Starter for faster creation bots'
 
 repositories {
 	mavenCentral()
@@ -15,6 +16,8 @@ repositories {
 
 dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.7.2'
+	implementation group: 'org.telegram', name: 'telegrambots', version: '6.1.0'
+
 	testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.2'
 }
 
