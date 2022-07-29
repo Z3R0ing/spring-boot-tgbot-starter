@@ -9,6 +9,11 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.z3r0ing.telegrambots.bots.StarterLongPollingBot;
 import ru.z3r0ing.telegrambots.properties.TelegramBotProperties;
 
+/**
+ * Configured Telegram Bot
+ *
+ * @author Z3R0ing
+ */
 @Configuration
 @EnableConfigurationProperties(TelegramBotProperties.class)
 public class TelegramBotConfiguration {

@@ -5,6 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+/**
+ * Long polling telegram bot
+ *
+ * @author Z3R0ing
+ */
 public class StarterLongPollingBot extends TelegramLongPollingBot {
 
     public StarterLongPollingBot() {
