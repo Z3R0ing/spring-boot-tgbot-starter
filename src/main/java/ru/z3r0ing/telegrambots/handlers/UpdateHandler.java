@@ -3,7 +3,6 @@ package ru.z3r0ing.telegrambots.handlers;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.z3r0ing.telegrambots.tgapi.UpdateType;
-import ru.z3r0ing.telegrambots.tgapi.objects.UpdateContext;
 
 import javax.annotation.Nullable;
 
@@ -18,7 +17,6 @@ public interface UpdateHandler {
      * Handles received update
      * @param update received update
      * @return {@link BotApiMethod} as result. Can be null
-     * @throws IllegalArgumentException if handler can't work with such update
      * @apiNote should use with updates same type as from {@link #getHandleableUpdateType()}
      */
     @Nullable

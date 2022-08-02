@@ -20,7 +20,6 @@ public interface MessageTypeHandler {
      * @param message result of {@link Update#getMessage}
      * @param updateContext context for received update
      * @return {@link BotApiMethod} as result. Can be null
-     * @throws IllegalArgumentException if handler can't work with such update
      * @apiNote should use with updates same type as from {@link #getHandleableMessageType()}
      */
     @Nullable
