@@ -9,6 +9,7 @@ package ru.z3r0ing.telegrambots.tgapi;
  */
 public enum MessageType {
     TEXT,
+    COMMAND,
     ANIMATION,
     AUDIO,
     DOCUMENT,

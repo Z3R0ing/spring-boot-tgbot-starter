@@ -22,7 +22,11 @@ public final class TelegramMessages {
      */
     public static MessageType getMessageType(Message message) {
         if (message.getText() != null) {
-            return MessageType.TEXT;
+            if (message.getText().startsWith("/")) {
+                return MessageType.COMMAND;
+            } else {
+                return MessageType.TEXT;
+            }
         }
         if (message.getAnimation() != null) {
             return MessageType.ANIMATION;

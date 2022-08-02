@@ -6,7 +6,7 @@ Spring Boot Starter for faster creation bots based on [org.telegram:telegrambots
 
 The main idea of the project is adding update processing logic for bots without editing higher level code of the logic.
 Write only new code with specific for your bot logic, without editing other code.
-All global checks, "if", switches, routing logic to specific logic are already implemented.
+All global checks, "if", switch, routing logic to specific logic are already implemented.
 
 ## Dependency
 
@@ -17,11 +17,21 @@ All global checks, "if", switches, routing logic to specific logic are already i
 3. Add dependency in your project
 
 ```groovy
+// build.gradle
 implementation group: 'ru.z3r0ing.telegrambots',
         name: 'z3r0ing-spring-boot-tgbot-starter',
-        version: '0.0.3-SNAPSHOT'
+        version: '0.1.0'
 // OR
-implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:0.0.3-SNAPSHOT'
+implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:0.1.0'
+```
+
+```xml
+<!-- pom.xml -->
+<dependency>
+    <groupId>ru.z3r0ing.telegrambots</groupId>
+    <artifactId>z3r0ing-spring-boot-tgbot-starter</artifactId>
+    <version>0.1.0</version>
+</dependency>
 ```
 
 4. Add `z3r0ing.telegrambots.bot.username` and `z3r0ing.telegrambots.bot.token` properties in application.properties
@@ -65,6 +75,7 @@ enum UpdateType {
 ```java
 enum MessageType {
     TEXT,
+    COMMAND,
     ANIMATION,
     AUDIO,
     DOCUMENT,
@@ -146,8 +157,9 @@ public class ChannelPostHandler implements UpdateHandler {
 ### Message Handler
 
 For **UpdateType._MESSAGE_** starter has base implementation of **UpdateHandler** - **MessageHandler**.
-**MessageHandler** get **MessageType** of received **Message** and pass this **Message** to suitable implementation
-of **MessageTypeHandler**.
+**MessageHandler** gets **MessageType** of received **Message** and passes this **Message** to suitable implementation
+of **MessageTypeHandler**, but if **MessageType** is command, it passes **Message** to suitable implementation
+of **CommandHandler** which has the same command as in message text.
 
 ```java
 // src/main/java/ru/z3r0ing/telegrambots/handlers/message/MessageHandler.java
@@ -160,9 +172,12 @@ public BotApiMethod<?> handleUpdate(Update update) {
         log.error("message is null in MessageHandler");
         return null;
     }
-
     MessageType messageType = TelegramMessages.getMessageType(message);
 
+    if (messageType == MessageType.COMMAND) {
+        return handleCommand(message, update);
+    }
+    
     for (MessageTypeHandler messageTypeHandler : messageTypeHandlerList) {
         if (messageTypeHandler.getHandleableMessageType() == messageType) {
             return messageTypeHandler.handleMessage(message, new UpdateContext(message.getFrom(), message.getChat(), update));
@@ -171,13 +186,31 @@ public BotApiMethod<?> handleUpdate(Update update) {
 
     return null;
 }
+
+private BotApiMethod<?> handleCommand(Message message, Update update) {
+    // get command from message text
+    Command command = new Command(message.getText());
+    // if mentioned not this bot - skip
+    if (command.getMention() != null && !command.getMention().equals(telegramBotProperties.getUsername())) {
+        return null;
+    }
+    
+    for (CommandHandler commandHandler : commandHandlerList) {
+        if (commandHandler.getCommandName().equals(command.getCommand())) {
+            return commandHandler.handleCommandMessage(message,
+                                    new UpdateContext(message.getFrom(), message.getChat(), update, command.getArgs()));
+        }
+    }
+    
+    return null;
+}
 ```
 
 #### Add message content handlers
 
 **Message** can contain different content. You can create handlers for any content type of **Message**. Just make class
-implements **MessageTypeHandler** and
-add annotation **@BotHandler** to create the bean for this handler. For example, handler of sticker message.
+implements **MessageTypeHandler** and add annotation **@BotHandler** to create the bean for this handler.
+For example, handler of sticker message.
 
 ```java
 @BotHandler
@@ -196,7 +229,26 @@ public class StickerMessageHandler implements MessageTypeHandler {
 }
 ```
 
+#### Add command handler
+**Message** can contain commands for a bot. You can create handlers for commands. Just make class implements
+**CommandHandler** and add annotation **@BotHandler** to create the bean for this handler.
+For example, handler of start command:
+
+```java
+@BotHandler
+public class StartCommandHandler implements CommandHandler {
+    @Override
+    public BotApiMethod<?> handleCommandMessage(Message message, UpdateContext updateContext) {
+        return TelegramMessages.createPlainTextMessage(updateContext.getChat(), "Hello!");
+    }
+
+    @Override
+    public String getCommandName() {
+        return "start";
+    }
+}
+```
+
 ## TODO
 
-1. Command support
-2. Executing BotApiMethod without receiving Update
+1. Executing BotApiMethod without receiving Update
