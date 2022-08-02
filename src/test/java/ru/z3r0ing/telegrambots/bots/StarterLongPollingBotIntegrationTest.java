@@ -6,6 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.telegram.telegrambots.meta.api.methods.GetMe;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
@@ -48,5 +51,17 @@ class StarterLongPollingBotIntegrationTest {
         } catch (TelegramApiException e) {
             Assertions.fail(e);
         }
+    }
+
+    @Test
+    void onUpdateReceived() {
+        Chat chat = new Chat();
+        chat.setId(1L);
+        Message message = new Message();
+        String testMessage = "test message";
+        message.setText(testMessage);
+        Update update = new Update();
+        update.setMessage(message);
+        Assertions.assertDoesNotThrow(() -> starterLongPollingBot.onUpdateReceived(update));
     }
 }

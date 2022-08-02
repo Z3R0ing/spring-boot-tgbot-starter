@@ -7,7 +7,10 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.z3r0ing.telegrambots.bots.StarterLongPollingBot;
+import ru.z3r0ing.telegrambots.handlers.UpdateHandler;
 import ru.z3r0ing.telegrambots.properties.TelegramBotProperties;
+
+import java.util.List;
 
 /**
  * Configured Telegram Bot
@@ -25,8 +28,8 @@ public class TelegramBotConfiguration {
     }
 
     @Bean
-    public StarterLongPollingBot longPollingBot() throws TelegramApiException {
-        StarterLongPollingBot longPollingBot = new StarterLongPollingBot();
+    public StarterLongPollingBot longPollingBot(List<UpdateHandler> updateHandlers) throws TelegramApiException {
+        StarterLongPollingBot longPollingBot = new StarterLongPollingBot(updateHandlers);
         longPollingBot.setBotUsername(telegramBotProperties.getUsername());
         longPollingBot.setBotToken(telegramBotProperties.getToken());
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
