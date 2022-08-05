@@ -1,1 +1,4 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=ru.z3r0ing.telegrambots.config.TelegramBotConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+ru.z3r0ing.telegrambots.config.TelegramBotConfiguration,\
+ru.z3r0ing.telegrambots.config.UpdateHandlersConfiguration
+

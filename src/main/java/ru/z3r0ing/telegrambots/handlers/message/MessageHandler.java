@@ -24,8 +24,6 @@ import java.util.List;
  *
  * @author Z3R0ing
  */
-@ConditionalOnMissingClass
-@BotHandler
 public class MessageHandler implements UpdateHandler {
 
     private static final Logger log = LoggerFactory.getLogger(MessageHandler.class);
