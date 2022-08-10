@@ -18,19 +18,28 @@ All global checks, "if", switch, routing logic to specific logic are already imp
 
 ```groovy
 // build.gradle
+implementation group: 'org.telegram',
+        name: 'telegrambots',
+        version: '6.1.0'
 implementation group: 'ru.z3r0ing.telegrambots',
         name: 'z3r0ing-spring-boot-tgbot-starter',
-        version: '1.0.0'
+        version: '1.0.1'
 // OR
-implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:1.0.0'
+implementation 'org.telegram:telegrambots:6.1.0'
+implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:1.0.1'
 ```
 
 ```xml
 <!-- pom.xml -->
 <dependency>
+   <groupId>org.telegram</groupId>
+   <artifactId>telegrambots</artifactId>
+   <version>6.1.0</version>
+</dependency>
+<dependency>
     <groupId>ru.z3r0ing.telegrambots</groupId>
     <artifactId>z3r0ing-spring-boot-tgbot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
