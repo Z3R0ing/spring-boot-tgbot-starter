@@ -14,15 +14,15 @@ All global checks, "if", switch, routing logic to specific logic are already imp
 
 2. Run `./gradlew build publishToMavenLocal`
 
-3. Add dependency in your project
+3. Add dependency in your project (need `spring-boot-starter` too)
 
 ```groovy
 // build.gradle
 implementation group: 'ru.z3r0ing.telegrambots',
         name: 'z3r0ing-spring-boot-tgbot-starter',
-        version: '0.1.0'
+        version: '1.0.0'
 // OR
-implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:0.1.0'
+implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:1.0.0'
 ```
 
 ```xml
@@ -30,7 +30,7 @@ implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:0.1.0'
 <dependency>
     <groupId>ru.z3r0ing.telegrambots</groupId>
     <artifactId>z3r0ing-spring-boot-tgbot-starter</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
