@@ -32,9 +32,9 @@ implementation 'ru.z3r0ing.telegrambots:z3r0ing-spring-boot-tgbot-starter:1.0.1'
 ```xml
 <!-- pom.xml -->
 <dependency>
-   <groupId>org.telegram</groupId>
-   <artifactId>telegrambots</artifactId>
-   <version>6.1.0</version>
+    <groupId>org.telegram</groupId>
+    <artifactId>telegrambots</artifactId>
+    <version>6.1.0</version>
 </dependency>
 <dependency>
     <groupId>ru.z3r0ing.telegrambots</groupId>
@@ -189,7 +189,8 @@ public BotApiMethod<?> handleUpdate(Update update) {
     
     for (MessageTypeHandler messageTypeHandler : messageTypeHandlerList) {
         if (messageTypeHandler.getHandleableMessageType() == messageType) {
-            return messageTypeHandler.handleMessage(message, new UpdateContext(message.getFrom(), message.getChat(), update));
+            return messageTypeHandler.handleMessage(message,
+                new UpdateContext(message.getFrom(), message.getChat(), update));
         }
     }
 
@@ -207,7 +208,7 @@ private BotApiMethod<?> handleCommand(Message message, Update update) {
     for (CommandHandler commandHandler : commandHandlerList) {
         if (commandHandler.getCommandName().equals(command.getCommand())) {
             return commandHandler.handleCommandMessage(message,
-                                    new UpdateContext(message.getFrom(), message.getChat(), update, command.getArgs()));
+                new UpdateContext(message.getFrom(), message.getChat(), update, command.getArgs()));
         }
     }
     
