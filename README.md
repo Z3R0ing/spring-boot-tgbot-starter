@@ -262,3 +262,5 @@ public class StartCommandHandler implements CommandHandler {
 ## TODO
 
 1. Executing BotApiMethod without receiving Update
+2. Logs for incoming message
+3. Method which executes before handling update
